@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
+    "antd": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-modal-wrapper": "^0.5.4",
     "react-redux": "^5.0.7",
     "react-router": "^3.2.1",
     "react-router-redux": "^4.0.8",

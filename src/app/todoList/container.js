@@ -2,13 +2,16 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { List, Segment } from 'semantic-ui-react'
 
-import { addTodoList } from './action'
 
-import { 
+import { addTodoList, deleteTodoList, editTodoList } from './action'
+
+
+
+import {
   AddListForm,
   NameListTable,
+  ModalEditList
 } from './component/'
 
 class TodoList extends Component {
@@ -16,42 +19,93 @@ class TodoList extends Component {
   static propTypes = {
     todoList: PropTypes.array,
     onAddTodoList: PropTypes.func,
+    onDeleteTodoList: PropTypes.func,
+    onEditTodoList: PropTypes.func
   }
 
   state = {
-    nameValue: ''
+    nameValue: '',
+    visible: false,
+    editItem: ''
   }
 
   onChangeName = (text) => {
-    this.setState({ nameValue: text })
+    this.setState({
+      nameValue: text
+    })
+  }
+  onChangeEditName = (text) => {
+    this.setState({
+      editItem: text
+    })
   }
 
   handleClickAddTodo = () => {
     const { nameValue } = this.state
     const { onAddTodoList } = this.props
-    onAddTodoList(nameValue)
-    this.setState({ nameValue: '' })
+    if (nameValue) {
+      onAddTodoList(nameValue)
+      this.setState({ nameValue: '' })
+    }
   }
 
+  handleClickShowModal = (index) => {
+    const { onEditTodoList, todoList } = this.props
+    const { visible } = this.state
+    console.log(todoList)
+      this.setState({
+        visible: true,
+        editItem: todoList[index],
+        index
+      })
+  }
+
+  handleClickEditTodo = () => {
+    const { visible } = this.state
+    const { onEditTodoList } = this.props
+    onEditTodoList(this.state.editItem, this.state.index)
+    this.setState({
+      visible: false,
+    })
+
+  }
+
+  handleClickDeleteTodo = (index) => {
+    const { onDeleteTodoList } = this.props
+    console.log(index)
+    onDeleteTodoList(index)
+
+  }
   render() {
     const {
       todoList
     } = this.props
 
     const {
-      nameValue
+      nameValue, visible, editItem
     } = this.state
-    
+
+
     return (
       <WrapperTodeList>
-        <AddListForm 
-          onChangeName={ this.onChangeName }
-          handleClickAddTodo={ this.handleClickAddTodo }
-          nameValue={ nameValue }
+        <AddListForm
+          onChangeName={this.onChangeName}
+          handleClickAddTodo={this.handleClickAddTodo}
+          nameValue={nameValue}
         />
-        <NameListTable 
-          nameList={ todoList }
+        <NameListTable
+          nameList={todoList}
+          handleClickDeleteTodo={this.handleClickDeleteTodo}
+          handleClickShowModal={this.handleClickShowModal}
         />
+        {
+          visible && <ModalEditList 
+            handleClickEditTodo={this.handleClickEditTodo} 
+            defaultOpen={visible} 
+            editItem={editItem}
+            onChangeEditName={this.onChangeEditName}
+          />
+        }
       </WrapperTodeList>
     )
   }
@@ -59,17 +113,24 @@ class TodoList extends Component {
 
 const WrapperTodeList = styled.div`
   padding: 50px;
+  width: 800px;
+  margin: 0 auto;
 `
 
+// change state redux to props react send to dump component (currency state )
 const mapStateToProps = (state) => {
+  console.log(state)
   console.log(state.store.todoList.datas)
   return {
     todoList: state.store.todoList.datas
   }
 }
 
+// change dispatch (send action to reducers) to props react send to dump component (wait use)
 const mapDispatchToProps = (dispatch) => ({
-  onAddTodoList: (value) => dispatch(addTodoList(value))
+  onAddTodoList: (value) => dispatch(addTodoList(value)),
+  onDeleteTodoList: (index) => dispatch(deleteTodoList(index)),
+  onEditTodoList: (editItem, index) => dispatch(editTodoList(editItem, index))
 })
 
 export const TodoListPage = connect(
