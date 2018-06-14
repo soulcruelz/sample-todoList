@@ -4,12 +4,12 @@ export const DELETE_TODO_LIST = 'todoList/DELETE_TODO_LIST'
 export const UPDATE_TODO_LIST = 'todoList/UPDATE_TODO_LIST'
 
 
-export const addTodoList = (name) => {
-  console.log('onClick Action', name)
+export const addTodoList = (value) => {
+  console.log('onClick Action', value)
   return {
     type: ADD_TODO_LIST,
     payload: {
-      name
+      value
     }
   }
 }

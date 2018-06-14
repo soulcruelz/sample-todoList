@@ -7,37 +7,28 @@ const defaultState = {
 export default function reducer(state = defaultState, action) {
   switch (action.type) {
     case ADD_TODO_LIST: {
-      const { name } = action.payload
+      const { value } = action.payload
       const { datas } = state
       console.log(datas)
       return {
         ...state,
-        datas: datas.concat([name])
+        datas: datas.concat([value])
       }
     }
     case DELETE_TODO_LIST: {
-      console.log("delete")
-      console.log(state)
       const { indexDelete } = action.payload
-      const NewState = state.datas.filter((value, index) => index !== indexDelete);
+      const newState = state.datas.filter((value, index) => index !== indexDelete);
       return {
         ...state,
-        datas: NewState
+        datas: newState
       }
     }
     case UPDATE_TODO_LIST: {
       const { editItem, index } = action.payload
-      console.log('edittest')
-      console.log(editItem)
-      console.log(index)
       const newState = state
       newState.datas[index] = editItem
-      console.log(newState)
       return newState
     }
-  
-
-
     default:
       return state
   }

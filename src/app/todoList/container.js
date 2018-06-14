@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
-
-import { addTodoList, deleteTodoList, editTodoList } from './action'
-
-
+import {
+  addTodoList,
+  deleteTodoList,
+  editTodoList
+} from './action'
 
 import {
   AddListForm,
@@ -48,34 +49,28 @@ class TodoList extends Component {
       this.setState({ nameValue: '' })
     }
   }
+  handleClickDeleteTodo = (index) => {
+    const { onDeleteTodoList } = this.props
+    onDeleteTodoList(index)
+  }
 
   handleClickShowModal = (index) => {
-    const { onEditTodoList, todoList } = this.props
-    const { visible } = this.state
-    console.log(todoList)
-      this.setState({
-        visible: true,
-        editItem: todoList[index],
-        index
-      })
+    const { todoList } = this.props
+    this.setState({
+      visible: true,
+      editItem: todoList[index],
+      index
+    })
   }
 
   handleClickEditTodo = () => {
-    const { visible } = this.state
     const { onEditTodoList } = this.props
     onEditTodoList(this.state.editItem, this.state.index)
     this.setState({
       visible: false,
     })
-
   }
-
-  handleClickDeleteTodo = (index) => {
-    const { onDeleteTodoList } = this.props
-    console.log(index)
-    onDeleteTodoList(index)
-
-  }
+  
   render() {
     const {
       todoList
@@ -99,9 +94,9 @@ class TodoList extends Component {
           handleClickShowModal={this.handleClickShowModal}
         />
         {
-          visible && <ModalEditList 
-            handleClickEditTodo={this.handleClickEditTodo} 
-            defaultOpen={visible} 
+          <ModalEditList
+            handleClickEditTodo={this.handleClickEditTodo}
+            defaultOpen={visible}
             editItem={editItem}
             onChangeEditName={this.onChangeEditName}
           />

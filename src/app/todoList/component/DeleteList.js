@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 export const DeleteItemList = (props) => (<WarpperDelete>
-    {console.log(props)}
     <Button onClick={() => props.handleClickDeleteTodo(props.indexs)} type='button'>Delete</Button>
 </WarpperDelete>)
 

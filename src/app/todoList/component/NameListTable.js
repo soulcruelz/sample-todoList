@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, Segment, Button } from 'semantic-ui-react'
+import { List, Segment } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { DeleteItemList } from './DeleteList'
@@ -9,15 +9,12 @@ import { EditItemList } from './EditList'
 
 export const NameListTable = ({
   nameList,
-  handleClickEditTodo,
   handleClickDeleteTodo,
   handleClickShowModal,
   visible
 }) => (
     <SegmentWrapper inverted>
       <List divided inverted relaxed>
-        {console.log("namelist")}
-        {console.log(nameList)}
         {
           !!nameList.length ?
             nameList.map((name, index) => (
@@ -28,7 +25,7 @@ export const NameListTable = ({
                   </List.Content>
                 </WarpperContent>
                 <WarpperDeleteAndEdit>
-                  <DeleteItemList indexs = {index}   handleClickDeleteTodo={handleClickDeleteTodo}/>
+                  <DeleteItemList indexs = {index}  handleClickDeleteTodo={handleClickDeleteTodo}/>
                   <EditItemList indexs = {index} visible={visible} handleClickShowModal={handleClickShowModal}/>
                 </WarpperDeleteAndEdit>
               </List.Item>

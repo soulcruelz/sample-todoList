@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Checkbox, Form } from 'semantic-ui-react'
+import { Button, Form } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
@@ -24,12 +24,8 @@ export const AddListForm = ({
           </WrapperAdd>
         </WrapperHead>
       </Form.Field>
-
     </Form>
   )
-
-
-
 
 AddListForm.propTypes = {
   handleClickAddTodo: PropTypes.func,

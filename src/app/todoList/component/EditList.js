@@ -14,7 +14,6 @@ export const EditItemList = (props) => (
 EditItemList.propTypes = {
     handleClickShowModal: PropTypes.func,
     indexs: PropTypes.number
-
 }
 const WarpperEdit = styled.div`
   float: right; 
